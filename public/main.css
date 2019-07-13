@@ -1,0 +1,129 @@
+body, html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1em;
+    background-color: #ebebeb;
+    color: #F9F9F9;
+    padding: 0;
+    margin: 0;
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 500px;
+    background-color: #293558;
+    z-index: 4;
+}
+
+.hero {
+    text-align: center;
+    color: white;
+    position: relative;
+    z-index: 5;
+    margin: 5rem 1rem;
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+.board {
+    background-color: white;
+    max-width: 100%;
+    box-sizing: border-box;
+    width: 1024px;
+    position: relative;
+    z-index: 5;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto 4em auto;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .1);
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    padding: 1em 3em;
+    color: #5E5E5E;
+    align-items: center;
+}
+
+.level-container {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.info-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.row .number {
+    font-size: 1.5em;
+    color: black;
+    font-weight: bold;
+    margin: 0 1em 0 0;
+}
+
+.row .name {
+    flex: 1;
+}
+
+.row .level {
+    margin: 0 2em;
+    white-space: nowrap;
+}
+
+.row .level span {
+    color: black;
+    font-weight: bold;
+    padding-left: .5em;
+}
+
+.row + .row{
+    border-top: 1px solid rgba(0, 0, 0, .1);
+}
+
+.progressbar {
+    background-color: #E8E8E8;
+    border-radius: .35rem;
+    height: .7em;
+    width: 100%;
+    min-width: 10rem;
+    max-width: 30rem;
+}
+
+.progressbar > .pointer {
+    background-color: #3771FA;
+    border-radius: .35rem;
+    height: 100%;
+}
+
+footer {
+    color: #5E5E5E;
+    text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+    .board {
+        border-radius: 0;
+    }
+
+    .row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .row {
+        padding: 1em;
+    }
+}
