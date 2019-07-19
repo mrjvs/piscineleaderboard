@@ -72,6 +72,18 @@ body::after {
     margin: 0 1em 0 0;
 }
 
+.row .info-container.current-piscine .number::before
+{
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: 1em;
+    height: 1em;
+    background-color: #3ab55f;
+    border-radius: 50%;
+}
+
 .row .name {
     flex: 1;
 }

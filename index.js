@@ -38,6 +38,14 @@ app.get("/", async (req, res) => {
         subtitle: "Sorted by level for Codam july piscine."
     });
 });
+app.get("/all", async (req, res) => {
+    res.render("home", {
+        layout: false,
+        users: apiFT.getAllUsers(),
+        title: "Codam piscine Leaderboard",
+        subtitle: "Sorted by level for all Codam piscines."
+    });
+});
 app.get("/api/sortedusers", async (req, res) => {
     res.json(apiFT.getUsers());
 });

@@ -15,7 +15,7 @@
     <section class="board">
         {{#each users}}
         <div class="row">
-            <div class="info-container">
+            <div class="info-container {{#if current_piscine}}current-piscine{{/if}}">
                 <p class="number">{{getrank @index}}</p>
                 <p class="name">{{user.login}}</p>
                 <p class="level">lvl<span>{{getlvl level}}</span></p>
