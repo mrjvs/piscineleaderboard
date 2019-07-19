@@ -17,6 +17,7 @@ class ApiFT {
         const schedule = cron.schedule('*/5 * * * *', async () => {
             const token = await this.getToken();
             await this.getPiscineUsers(token);
+            await this.getAllPiscineUsers(token);
         });
         this.init();
     }
@@ -25,6 +26,7 @@ class ApiFT {
     async init() {
         const token = await this.getToken();
         await this.getPiscineUsers(token);
+        await this.getAllPiscineUsers(token);
     }
 
     // gets oauth access token

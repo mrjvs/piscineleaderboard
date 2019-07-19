@@ -49,6 +49,9 @@ app.get("/all", async (req, res) => {
 app.get("/api/sortedusers", async (req, res) => {
     res.json(apiFT.getUsers());
 });
+app.get("/api/sortedusersall", async (req, res) => {
+    res.json(apiFT.getAllUsers());
+});
 app.use(express.static("public"));
 
 // setup server
