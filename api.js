@@ -52,14 +52,15 @@ class ApiFT {
         output = output.concat(JSON.parse(response.body));
         const pages = parseInt(response.headers["x-total"]);
         const amountpages = (Math.floor(pages / 100) + 1);
+        await sleep(1000);
         for (let i = 1; i < amountpages; i++) {
-            await sleep(1000);
             let res = await request.get({
                 url: `https://api.intra.42.fr/v2/cursus/piscine-c/cursus_users?filter[campus_id]=${config.campus_id}&filter[active]=true&filter[end_at]=${config.end_at}&filter[begin_at]=${config.begin_at}&page[size]=100&page[number]=${i + 1}`,
                 auth: {
                     bearer: token
                 }
             });
+            await sleep(1000);
             output = output.concat(JSON.parse(res));
         }
         this.users = output;
@@ -78,14 +79,15 @@ class ApiFT {
         output = output.concat(JSON.parse(response.body));
         const pages = parseInt(response.headers["x-total"]);
         const amountpages = (Math.floor(pages / 100) + 1);
+        await sleep(1000);
         for (let i = 1; i < amountpages; i++) {
-            await sleep(1000);
             let res = await request.get({
                 url: `https://api.intra.42.fr/v2/cursus/piscine-c/cursus_users?filter[campus_id]=${config.campus_id}&page[size]=100&page[number]=${i + 1}`,
                 auth: {
                     bearer: token
                 }
             });
+            await sleep(1000);
             output = output.concat(JSON.parse(res));
         }
         this.allusers = output;

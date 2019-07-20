@@ -35,7 +35,7 @@ app.get("/", async (req, res) => {
         layout: false,
         users: apiFT.getUsers(),
         title: "Codam Leaderboard",
-        subtitle: "Sorted by level for Codam july piscine."
+        subtitle: "Sorted by level for Codam july piscine.<br>Updates every 10 minutes."
     });
 });
 app.get("/all", async (req, res) => {
@@ -43,7 +43,7 @@ app.get("/all", async (req, res) => {
         layout: false,
         users: apiFT.getAllUsers(),
         title: "Codam piscine Leaderboard",
-        subtitle: "Sorted by level for all Codam piscines."
+        subtitle: "Sorted by level for all Codam piscines.<br>Updates every 10 minutes."
     });
 });
 app.get("/api/sortedusers", async (req, res) => {
