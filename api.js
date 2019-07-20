@@ -14,7 +14,7 @@ class ApiFT {
         this.allusers = [];
 
         // setup cron schedule to get new users every 5 minutes
-        const schedule = cron.schedule('*/5 * * * *', async () => {
+        const schedule = cron.schedule('*/10 * * * *', async () => {
             const token = await this.getToken();
             await this.getPiscineUsers(token);
             await this.getAllPiscineUsers(token);
@@ -53,7 +53,7 @@ class ApiFT {
         const pages = parseInt(response.headers["x-total"]);
         const amountpages = (Math.floor(pages / 100) + 1);
         for (let i = 1; i < amountpages; i++) {
-            await sleep(500);
+            await sleep(1000);
             let res = await request.get({
                 url: `https://api.intra.42.fr/v2/cursus/piscine-c/cursus_users?filter[campus_id]=${config.campus_id}&filter[active]=true&filter[end_at]=${config.end_at}&filter[begin_at]=${config.begin_at}&page[size]=100&page[number]=${i + 1}`,
                 auth: {
@@ -69,7 +69,7 @@ class ApiFT {
     async getAllPiscineUsers(token) {
         let output = [];
         const response = await request.get({
-            url: `https://api.intra.42.fr/v2/cursus/piscine-c/cursus_users?filter[campus_id]=${config.campus_id}&filter[active]=true&page[size]=100`,
+            url: `https://api.intra.42.fr/v2/cursus/piscine-c/cursus_users?filter[campus_id]=${config.campus_id}&page[size]=100`,
             auth: {
                 bearer: token
             },
@@ -79,9 +79,9 @@ class ApiFT {
         const pages = parseInt(response.headers["x-total"]);
         const amountpages = (Math.floor(pages / 100) + 1);
         for (let i = 1; i < amountpages; i++) {
-            await sleep(500);
+            await sleep(1000);
             let res = await request.get({
-                url: `https://api.intra.42.fr/v2/cursus/piscine-c/cursus_users?filter[campus_id]=${config.campus_id}&filter[active]=true&page[size]=100&page[number]=${i + 1}`,
+                url: `https://api.intra.42.fr/v2/cursus/piscine-c/cursus_users?filter[campus_id]=${config.campus_id}&page[size]=100&page[number]=${i + 1}`,
                 auth: {
                     bearer: token
                 }
@@ -116,7 +116,7 @@ class ApiFT {
 
     // gets cached users from every piscine
     getAllUsers() {
-        return this.addIndicator(this.sortUsers(this.users));
+        return this.addIndicator(this.sortUsers(this.allusers));
     }
 }
 
