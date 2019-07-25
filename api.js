@@ -12,12 +12,17 @@ class ApiFT {
         this.secret = secret;
         this.users = [];
         this.allusers = [];
+        this.examUsers = [];
 
-        // setup cron schedule to get new users every 5 minutes
+        // setup cron schedule to get new users every 10 minutes
         const schedule = cron.schedule('*/10 * * * *', async () => {
             const token = await this.getToken();
+            await sleep(1000);
             await this.getPiscineUsers(token);
+            await sleep(1000);
             await this.getAllPiscineUsers(token);
+            await sleep(1000);
+            await this.getFinalExamUsers(token);
         });
         this.init();
     }
@@ -25,7 +30,11 @@ class ApiFT {
     // gets initial data
     async init() {
         const token = await this.getToken();
+        await sleep(1000);
+        await this.getFinalExamUsers(token);
+        await sleep(1000);
         await this.getPiscineUsers(token);
+        await sleep(1000);
         await this.getAllPiscineUsers(token);
     }
 
@@ -94,10 +103,44 @@ class ApiFT {
         return output;
     }
 
+    async getFinalExamUsers(token) {
+        let output = [];
+
+        const response = await request.get({
+            url: `https://api.intra.42.fr/v2/projects/${config.final_exam}/projects_users?filter[campus]=${config.campus_id}&page[size]=100`,
+            auth: {
+                bearer: token
+            },
+            resolveWithFullResponse: true
+        });
+        output = output.concat(JSON.parse(response.body));
+        const pages = parseInt(response.headers["x-total"]);
+        const amountpages = (Math.floor(pages / 100) + 1);
+        await sleep(1000);
+        for (let i = 1; i < amountpages; i++) {
+            let res = await request.get({
+                url: `https://api.intra.42.fr/v2/projects/${config.final_exam}/projects_users?filter[campus]=${config.campus_id}&page[size]=100&page[number]=${i + 1}`,
+                auth: {
+                    bearer: token
+                }
+            });
+            await sleep(1000);
+            output = output.concat(JSON.parse(res));
+        }
+        this.examUsers = output;
+        return output;
+    }
+
     // sorts array of users by level
     sortUsers(users)
     {
         return users.sort((a, b) => b.level - a.level);
+    }
+
+    // sorts array of users by mark
+    sortMarkUsers(users)
+    {
+        return users.sort((a, b) => b.final_mark - a.final_mark);
     }
 
     addIndicator(users)
@@ -119,6 +162,11 @@ class ApiFT {
     // gets cached users from every piscine
     getAllUsers() {
         return this.addIndicator(this.sortUsers(this.allusers));
+    }
+
+    // gets cached exam users for every piscine
+    getExamUsers() {
+        return this.sortMarkUsers(this.examUsers);
     }
 }
 

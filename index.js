@@ -24,6 +24,9 @@ app.engine("handlebars", exphbs({
         },
         "getlvlpercent": function (level) {
             return ((level.toFixed(2) - Math.floor(level)) * 100);
+        },
+        "getmark": function (final_mark) {
+            return (final_mark ? final_mark : 0);
         }
     }
 }));
@@ -33,6 +36,7 @@ app.set("view engine", "handlebars");
 app.get("/", async (req, res) => {
     res.render("home", {
         layout: false,
+        color: "blue",
         users: apiFT.getUsers(),
         title: "Codam Leaderboard",
         subtitle: "Sorted by level for Codam july piscine.<br>Updates every 10 minutes."
@@ -41,9 +45,19 @@ app.get("/", async (req, res) => {
 app.get("/all", async (req, res) => {
     res.render("home", {
         layout: false,
+        color: "red",
         users: apiFT.getAllUsers(),
         title: "Codam piscine Leaderboard",
         subtitle: "Sorted by level for all Codam piscines.<br>Updates every 10 minutes."
+    });
+});
+app.get("/exam", async (req, res) => {
+    res.render("exam", {
+        layout: false,
+        color: "green",
+        users: apiFT.getExamUsers(),
+        title: "Codam final exam Leaderboard",
+        subtitle: "Sorted by exam score.<br>Updates every 10 minutes."
     });
 });
 app.get("/api/sortedusers", async (req, res) => {
@@ -52,9 +66,12 @@ app.get("/api/sortedusers", async (req, res) => {
 app.get("/api/sortedusersall", async (req, res) => {
     res.json(apiFT.getAllUsers());
 });
+app.get("/api/examusers", async (req, res) => {
+    res.json(apiFT.getExamUsers());
+});
 app.use(express.static("public"));
 
 // setup server
 app.listen(port, () => {
-    console.log("running");
+    console.log("running...");
 });

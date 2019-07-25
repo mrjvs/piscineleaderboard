@@ -17,6 +17,15 @@ body::after {
     background-color: #293558;
     z-index: 4;
 }
+body.blue::after {
+    background-color: #293558;
+}
+body.red::after {
+    background-color: #8e3f3f;
+}
+body.green::after {
+    background-color: #509050;
+}
 
 .hero {
     text-align: center;
@@ -118,6 +127,16 @@ body::after {
     background-color: #3771FA;
     border-radius: .35rem;
     height: 100%;
+}
+
+.blue .progressbar > .pointer {
+    background-color: #3771FA;
+}
+.red .progressbar > .pointer {
+    background-color: #d68071;
+}
+.green .progressbar > .pointer {
+    background-color: #60bd6c;
 }
 
 footer {

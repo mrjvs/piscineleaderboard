@@ -18,11 +18,11 @@
             <div class="info-container {{#if current_piscine}}current-piscine{{/if}}">
                 <p class="number">{{getrank @index}}</p>
                 <p class="name">{{user.login}}</p>
-                <p class="level">lvl<span>{{getlvl level}}</span></p>
+                <p class="level"><span>{{getmark final_mark}}</span></p>
             </div>
             <div class="level-container">
                 <div class="progressbar">
-                    <div class="pointer" style="width: {{getlvlpercent level}}%"></div>
+                    <div class="pointer" style="width: {{getmark final_mark}}%"></div>
                 </div>
             </div>
         </div>
